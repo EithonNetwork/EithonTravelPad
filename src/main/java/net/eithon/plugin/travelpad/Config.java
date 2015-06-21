@@ -31,7 +31,6 @@ public class Config {
 			disableEffectsAfterTicks = config.getInt("DisableEffectsAfterTicks", 120);
 			secondsToPauseBeforeNextTeleport = config.getInt("SecondsToPauseBeforeNextTeleport", 5);
 		}
-
 	}
 	public static class C {
 

@@ -97,7 +97,7 @@ public class Controller implements IBlockMoverFollower {
 
 	private void travelSoon(Player player, TravelPadInfo info) {
 		debug("travelSoon", "Enter");
-		TravellerInfo travellerInfo = new TravellerInfo(player);
+		TravellerInfo travellerInfo = new TravellerInfo(player, info);
 		this._travellers.put(player,  travellerInfo);
 		MoveEventHandler.addBlockMover(player, this);
 		if (info.isJumpPad()) {
@@ -167,7 +167,7 @@ public class Controller implements IBlockMoverFollower {
 		scheduler.scheduleSyncDelayedTask(this._eithonPlugin, new Runnable() {
 			public void run() {
 				debug("delayedJump task", "Prepare");
-				if (!prepareAndIsReadyToTravel(player, info, travellerInfo)) return;
+				if (!prepareAndIsReadyToTravel(player, travellerInfo)) return;
 				debug("delayedJump task", "JUMP!");
 				jump(player, info);
 			}
@@ -184,7 +184,7 @@ public class Controller implements IBlockMoverFollower {
 		scheduler.scheduleSyncDelayedTask(this._eithonPlugin, new Runnable() {
 			public void run() {
 				debug("delayedTeleport task", "Prepare");
-				if (!prepareAndIsReadyToTravel(player, info, travellerInfo)) return;
+				if (!prepareAndIsReadyToTravel(player, travellerInfo)) return;
 				debug("delayedTeleport task", "TELEPORT!");
 				teleport(player, info);
 			}
@@ -192,7 +192,7 @@ public class Controller implements IBlockMoverFollower {
 		debug("delayedTeleport", "Leave");
 	}
 
-	boolean prepareAndIsReadyToTravel(Player player, TravelPadInfo info, TravellerInfo travellerInfo) {
+	boolean prepareAndIsReadyToTravel(Player player, TravellerInfo travellerInfo) {
 		debug("prepareForJumpOrTele", "Enter");
 		TravellerInfo latestJumperInfo = this._travellers.get(player);
 		if (!travellerInfo.isSame(latestJumperInfo)){
@@ -263,13 +263,19 @@ public class Controller implements IBlockMoverFollower {
 		debug("maybeStopTravel", String.format("Enter (for player %s)", player.getName()));
 		TravellerInfo travellerInfo = this._travellers.get(player);
 		if ((travellerInfo == null) || !travellerInfo.isAboutToTele()) {
-			debug("maybeStopTravel", "User is not about to travel.");
+			debug("maybeStopTravel", "Player is not about to travel.");
 			debug("maybeStopTravel", "Leave");
 			return false;
 		}
 		Block block = player.getLocation().getBlock();
 		if ((block != null) && (block.getType() == Material.STONE_PLATE)) {
-			debug("maybeStopTravel", "User is still on stone plate.");
+			debug("maybeStopTravel", "Player is still on stone plate.");
+			debug("maybeStopTravel", "Leave");
+			return false;
+		}
+		
+		if (travellerInfo.playerIsConsideredOnTravelPad()) {
+			debug("maybeStopTravel", "Player is considered to be close enough to the travel pad to continue travelling.");
 			debug("maybeStopTravel", "Leave");
 			return false;
 		}
