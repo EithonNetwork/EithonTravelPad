@@ -1,6 +1,7 @@
 package net.eithon.plugin.travelpad;
 
 import net.eithon.library.extensions.EithonPlugin;
+import net.eithon.library.move.IBlockMoverFollower;
 import net.eithon.library.plugin.Logger.DebugPrintLevel;
 import net.eithon.plugin.travelpad.logic.Controller;
 
@@ -48,14 +49,13 @@ public final class EventListener implements Listener {
 		this._controller.maybeTravel(player, pressurePlate);
 	}
 
-	@EventHandler
-	public void onPlayerInteractEvent(PlayerMoveEvent event) {
-		if (event.isCancelled()) return;
-		Player player = event.getPlayer();
-		this._controller.maybeStopTravel(player);
-	}
-
 	private void debug(String method, String message) {
 		this._eithonPlugin.getEithonLogger().debug(DebugPrintLevel.VERBOSE, "%s: %s", method, message);
+	}
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -239,6 +239,26 @@ public class Controller implements IBlockMoverFollower {
 		return this._coolDown.isInCoolDownPeriod(player);
 	}
 
+	void removeEffects(Player player, TravellerInfo travellerInfo) {
+		travellerInfo.removeEffects();
+		if (travellerInfo.canBeRemoved()) this._travellers.remove(player);
+	}
+
+	void debug(String method, String message) {
+		this._eithonPlugin.getEithonLogger().debug(DebugPrintLevel.VERBOSE, "%s: %s", method, message);
+	}
+
+	@Override
+	public void moveEventHandler(PlayerMoveEvent event) {
+		Player player = event.getPlayer();
+		debug("TravelPad.moveEventHandler", String.format("Enter (for player %s)", player.getName()));
+		if (maybeStopTravel(player)) {
+			debug("TravelPad.moveEventHandler", String.format("Stop following player %s", player.getName()));
+			MoveEventHandler.removeBlockMover(player, this);
+		}
+		debug("TravelPad.moveEventHandler", "Leave");
+	}
+
 	public boolean maybeStopTravel(Player player) {
 		debug("maybeStopTravel", String.format("Enter (for player %s)", player.getName()));
 		TravellerInfo travellerInfo = this._travellers.get(player);
@@ -260,26 +280,6 @@ public class Controller implements IBlockMoverFollower {
 		Config.M.movedOffTravelPad.sendMessage(player);
 		debug("maybeStopTravel", "Leave");
 		return true;
-	}
-
-	void removeEffects(Player player, TravellerInfo travellerInfo) {
-		travellerInfo.removeEffects();
-		if (travellerInfo.canBeRemoved()) this._travellers.remove(player);
-	}
-
-	void debug(String method, String message) {
-		this._eithonPlugin.getEithonLogger().debug(DebugPrintLevel.VERBOSE, "%s: %s", method, message);
-	}
-
-	@Override
-	public void moveEventHandler(PlayerMoveEvent event) {
-		Player player = event.getPlayer();
-		debug("TravelPad.moveEventHandler", String.format("Enter (for player %s)", player.getName()));
-		if (maybeStopTravel(player)) {
-			debug("TravelPad.moveEventHandler", String.format("Stop following player %s", player.getName()));
-			MoveEventHandler.removeBlockMover(player, this);
-		}
-		debug("TravelPad.moveEventHandler", "Leave");
 	}
 
 	public TravelPadInfo getByNameOrInformUser(CommandSender sender, String name) {
