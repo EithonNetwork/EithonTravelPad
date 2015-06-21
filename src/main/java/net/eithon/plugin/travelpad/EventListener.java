@@ -52,10 +52,4 @@ public final class EventListener implements Listener {
 	private void debug(String method, String message) {
 		this._eithonPlugin.getEithonLogger().debug(DebugPrintLevel.VERBOSE, "%s: %s", method, message);
 	}
-
-	@Override
-	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }
