@@ -1,0 +1,43 @@
+name: EithonTravelPad
+main: net.eithon.plugin.travelpad.Plugin
+version: 1.1
+author: vanbrayne
+description: A Minecraft plugin for so called "Jump Pad" functionality
+depend: [EithonLibrary]
+commands:
+  travelpad:
+    description: Control jump pads
+    usage: /travelpad add | velocity | link | remove  | goto | list | reload
+    permission-message: You don't have <permission>
+permissions:
+  travelpad.*:
+    description: Gives access to all travelpad commands
+    default: op
+    travelpad.add: true
+    travelpad.velocity: true
+    travelpad.link: true
+    travelpad.remove: true
+    travelpad.list: true
+    travelpad.goto: true
+    travelpad.tele: true
+  travelpad.add:
+    description: Access to /travelpad add command
+    default: op
+  travelpad.velocity:
+    description: Access to /travelpad velocity command
+    default: op
+  travelpad.link:
+    description: Access to /travelpad link command
+    default: op
+  travelpad.remove:
+    description: Access to /travelpad remove command
+    default: op
+  travelpad.list:
+    description: Access to /travelpad list command
+    default: op
+  travelpad.goto:
+    description: Access to /travelpad goto command
+    default: op
+  travelpad.tele:
+    description: Can teleport from a travelpad
+    default: op

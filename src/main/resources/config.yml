@@ -1,0 +1,94 @@
+#
+# Debug level
+#	0 = NONE (no debug messages)
+#	1 = MAJOR (only major messages)
+#	2 = MINOR (also minor messages)
+#	3 = VERBOSE (all messages)
+#
+EithonDebugLevel: 1
+
+#
+# The time that Nausea is active from the time when the user activates the TravelPad
+#
+NauseaTicks: 200
+
+#
+# The time that Slowness is active from the time when the user activates the TravelPad
+#
+SlownessTicks: 0
+
+#
+# The time that Blindness is active from the time when the user activates the TravelPad
+#
+BlindnessTicks: 0
+
+#
+# After how long time (from the activation time) should we disable all effects
+#
+DisableEffectsAfterTicks: 120
+
+#
+# From the time when the user activates the TravelPad, how long until we actually teleport
+#
+TeleportAfterTicks: 71
+
+#
+# From the time when the user activates the TravelPad, how long until we actually jump
+#
+JumpAfterTicks: 0
+
+#
+# The time to wait before we load the travelpad data from file
+#
+SecondsBeforeLoad: 5.0
+
+#
+# Cool down period before you can jump again
+#
+SecondsToPauseBeforeNextTeleport: 5
+
+messages:
+
+  #
+  # Parameters: <travelpad name> (%s)
+  TravelPadAdded: TravelPad %s has been added.
+
+  #
+  # Parameters: <travelpad name> (%s)
+  TravelPadRemoved: TravelPad %s has been removed.
+
+  #
+  # Parameters: <travelpad name> (%s)
+  NextStepAfterAdd: Now link this travelpad with command /travelpad link %s <other travelpad name>.
+
+  #
+  # Parameters: <travelpad name 1> (%s) <travelpad name 2> (%s)
+  TravelPadsLinked: TravelPad %s and %s has been linked.
+
+  #
+  # Parameters: <travelpad name> (%s)
+  GotoTravelPad: You have been teleported to TravelPad %s.
+
+  #
+  # Parameters: NONE
+  MovedOffTravelPad_0: You moved away from the travelpad, cancelling travel.
+
+  #
+  # Parameters: <travelpad name> (%s)
+  UnknownTravelPad_1: Unknown travelpad (%s).
+  
+  #
+  # The following messages have the following possible parameters
+  # %NAME%: The name of the travelpad.
+  # %VELOCITY%: The velocity for a jump travelpad.
+  # %UP_SPEED%: The up speed for a jump travelpad.
+  # %FORWARD_SPEED%: The forward speed for a jump travelpad.
+  # %LINKED_TO%: The travelpad that a teleport travelpad is linked to
+  #
+  JumpInfo: "%NAME%: Up %UP_SPEED%, forward %FORWARD_SPEED%"
+  TeleportInfo: "%NAME%: Linked to %LINKED_TO%"
+
+
+
+
+
