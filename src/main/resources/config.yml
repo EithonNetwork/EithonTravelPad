@@ -1,13 +1,4 @@
 #
-# Debug level
-#	0 = NONE (no debug messages)
-#	1 = MAJOR (only major messages)
-#	2 = MINOR (also minor messages)
-#	3 = VERBOSE (all messages)
-#
-EithonDebugLevel: 1
-
-#
 # The time that Nausea is active from the time when the user activates the TravelPad
 #
 NauseaTicks: 200
@@ -25,12 +16,12 @@ BlindnessTicks: 0
 #
 # After how long time (from the activation time) should we disable all effects
 #
-DisableEffectsAfterTicks: 120
+DisableEffectsAfterTicks: 71
 
 #
 # From the time when the user activates the TravelPad, how long until we actually teleport
 #
-TeleportAfterTicks: 71
+TeleportAfterTicks: 70
 
 #
 # From the time when the user activates the TravelPad, how long until we actually jump
@@ -45,7 +36,20 @@ SecondsBeforeLoad: 5.0
 #
 # Cool down period before you can jump again
 #
-SecondsToPauseBeforeNextTeleport: 5
+SecondsToPauseBeforeNextTeleport: 3
+
+eithon:
+  UseMarkUpForMessages: 0
+  UseWrappingForMessages: 0
+  
+  #
+  # Debug level
+  #  0 = NONE (no debug messages)
+  #  1 = MAJOR (only major messages)
+  #  2 = MINOR (also minor messages)
+  #  3 = VERBOSE (all messages)
+  #
+  EithonDebugLevel: 1
 
 messages:
 
@@ -87,8 +91,3 @@ messages:
   #
   JumpInfo: "%NAME%: Up %UP_SPEED%, forward %FORWARD_SPEED%"
   TeleportInfo: "%NAME%: Linked to %LINKED_TO%"
-
-
-
-
-
