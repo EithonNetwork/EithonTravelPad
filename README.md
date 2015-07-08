@@ -29,6 +29,10 @@ A player must have the "TravelPad.jump" permission to use a TravelPad. If he/she
 
 ## Release history
 
+### 1.1.1 (2015-07-08)
+
+* BUG: Now shows subcommands if no subcommand was given.
+
 ### 1.0 (2015-04-18)
 
 * NEW: First Eithon release
