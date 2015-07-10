@@ -32,11 +32,12 @@ public class CommandHandler implements ICommandHandler {
 
 	@Override
 	public boolean onCommand(CommandParser commandParser) {
-		if (!commandParser.hasCorrectNumberOfArgumentsOrShowSyntax(1)) return true;
 		Player player = commandParser.getPlayerOrInformSender();
 		if (player == null) return true;
 
 		String command = commandParser.getArgumentCommand();
+		if (command == null) return false;
+		
 		if (command.equals("add")) {
 			addCommand(commandParser);
 		} else if (command.equals("link")) {
