@@ -29,7 +29,7 @@ public class AllTravelPads {
 		this._travelPadsByBlock = new HashMap<String, TravelPadInfo>();
 		this._travelPadsByName = new HashMap<String, TravelPadInfo>();
 	}
-	
+
 	public void add(TravelPadInfo info) {
 		this._travelPadsByName.put(info.getTravelPadName(), info);
 		this._travelPadsByBlock.put(info.getBlockHash(), info);
@@ -45,24 +45,24 @@ public class AllTravelPads {
 	}
 
 	TravelPadInfo getByLocation(Location location) {
-		debug("AllTravelPads.getByLocation", "Enter");
+		verbose("AllTravelPads.getByLocation", "Enter");
 		if (this._travelPadsByBlock == null) {
-			debug("AllTravelPads.getByLocation", "travelPadsByBlock == null");
+			verbose("AllTravelPads.getByLocation", "travelPadsByBlock == null");
 			return null;
 		}
 		String position = TravelPadInfo.toBlockHash(location);
 		if (!this._travelPadsByBlock.containsKey(position)) {
-			debug("AllTravelPads.getByLocation", "No travelpads at position " + position);
+			verbose("AllTravelPads.getByLocation", "No travelpads at position " + position);
 			for (TravelPadInfo info : this._travelPadsByBlock.values()) {
-				debug("AllTravelPads.getByLocation", String.format("TravelPad by block: %s", info.toString()));
+				verbose("AllTravelPads.getByLocation", String.format("TravelPad by block: %s", info.toString()));
 			}
 			for (TravelPadInfo info : this._travelPadsByName.values()) {
-				debug("AllTravelPads.getByLocation", String.format("TravelPad by name: %s", info.toString()));
+				verbose("AllTravelPads.getByLocation", String.format("TravelPad by name: %s", info.toString()));
 			}
 			return null;
 		}
 		TravelPadInfo info = this._travelPadsByBlock.get(position);
-		debug("AllTravelPads.getByLocation", String.format("Found a travelpad: %s.", info.toString()));
+		verbose("AllTravelPads.getByLocation", String.format("Found a travelpad: %s.", info.toString()));
 		return info;
 	}
 
@@ -104,7 +104,7 @@ public class AllTravelPads {
 		}
 		this._eithonPlugin.getEithonLogger().info("Saving %d TravelPads", travelPads.size());
 		File file = getTravelPadStorageFile();
-		
+
 		FileContent fileContent = new FileContent("TravelPad", 1, travelPads);
 		fileContent.save(file);
 	}
@@ -126,13 +126,26 @@ public class AllTravelPads {
 			this._eithonPlugin.getEithonLogger().debug(DebugPrintLevel.MAJOR, "The list of TravelPads was empty.");
 			return;
 		}
-		this._eithonPlugin.getEithonLogger().info("Restoring %d TravelPads from loaded file.", array.size());
+		this._eithonPlugin.getEithonLogger().info("Restoring %d TravelPads from file.", array.size());
 		this._travelPadsByBlock = new HashMap<String, TravelPadInfo>();
 		this._travelPadsByName = new HashMap<String, TravelPadInfo>();
 		for (int i = 0; i < array.size(); i++) {
-			TravelPadInfo info = new TravelPadInfo();
-			info.fromJson((JSONObject) array.get(i));
-			this.add(info);
+			verbose("load", "Loading TravelPad %d", i);
+			TravelPadInfo info = null;
+			try {
+				info = TravelPadInfo.getFromJson((JSONObject) array.get(i));
+				if (info == null) {
+					this._eithonPlugin.getEithonLogger().error("Could not load travelpad %d (result was null).", i);
+					continue;
+				}
+				this._eithonPlugin.getEithonLogger().info("Loaded travelpad %s", info.getTravelPadName());
+				this.add(info);
+			} catch (Exception e) {
+				this._eithonPlugin.getEithonLogger().error("Could not load travelpad %d (exception).", i);
+				if (info != null) this._eithonPlugin.getEithonLogger().error("Could not load travelpad %s", info.getTravelPadName());
+				this._eithonPlugin.getEithonLogger().error("%s", e.toString());
+				throw e;
+			}
 		}
 		for (TravelPadInfo info : this._travelPadsByName.values()) {
 			if (!info.isJumpPad()) {
@@ -143,7 +156,8 @@ public class AllTravelPads {
 		}
 	}
 
-	void debug(String method, String message) {
+	void verbose(String method, String format, Object... args) {
+		String message = String.format(format, args);
 		this._eithonPlugin.getEithonLogger().debug(DebugPrintLevel.VERBOSE, "%s: %s", method, message);
 	}
 }

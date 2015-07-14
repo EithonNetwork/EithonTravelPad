@@ -6,7 +6,6 @@ import net.eithon.library.extensions.EithonLocation;
 import net.eithon.library.extensions.EithonPlugin;
 import net.eithon.library.move.IBlockMoverFollower;
 import net.eithon.library.move.MoveEventHandler;
-import net.eithon.library.plugin.Configuration;
 import net.eithon.library.plugin.Logger.DebugPrintLevel;
 import net.eithon.library.time.CoolDown;
 import net.eithon.plugin.travelpad.Config;
@@ -32,12 +31,10 @@ public class Controller implements IBlockMoverFollower {
 
 	public Controller(EithonPlugin eithonPlugin){
 		this._eithonPlugin = eithonPlugin;
-		Configuration config = eithonPlugin.getConfiguration();
 		this._coolDown = new CoolDown("travelpad", Config.V.secondsToPauseBeforeNextTeleport);
 		this._travellers = new net.eithon.library.core.PlayerCollection<TravellerInfo>();
 		this._allTravelPads = new AllTravelPads(eithonPlugin);
-		double seconds = config.getDouble("SecondsBeforeLoad", 5.0);
-		this._allTravelPads.delayedLoad(eithonPlugin, seconds);
+		this._allTravelPads.delayedLoad(eithonPlugin, Config.V.secondsBeforeLoad);
 	}
 
 	public boolean createOrUpdateTravelPad(Player player, String name, double upSpeed, double forwardSpeed) {

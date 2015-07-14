@@ -136,14 +136,20 @@ public class TravelPadInfo implements IJson<TravelPadInfo> {
 		this._travelPadName = (String) jsonObject.get("name");
 		this._welcomeMessage = (String) jsonObject.get("welcomeMessage");
 		this._sourceLocation = EithonLocation.getFromJson(jsonObject.get("sourceLocation"));
+		if (this._sourceLocation == null) return null;
 		this._hasVelocity = (boolean) jsonObject.get("hasVelocity");
 		if (this._hasVelocity) {
 			velocityFromJson(jsonObject.get("velocity"));
 		} else {
 			this._targetLocation = EithonLocation.getFromJson(jsonObject.get("targetLocation"));
+			if (this._targetLocation == null) return null;
 		}
-		this._creator = EithonPlayer.getFromJSon(jsonObject.get("creator"));
+		this._creator = EithonPlayer.getFromJson(jsonObject.get("creator"));
 		return this;
+	}
+	
+	public static TravelPadInfo getFromJson(Object json) {
+		return new TravelPadInfo().fromJson(json);
 	}
 
 	private void velocityFromJson(Object json) {
@@ -152,11 +158,6 @@ public class TravelPadInfo implements IJson<TravelPadInfo> {
 		this._forwardSpeed = (double) jsonObject.get("forwardSpeed");
 		this._yaw = (float) (double) jsonObject.get("yaw");
 		this._velocity = convertToVelocityVector(this._upSpeed, this._forwardSpeed, this._yaw);
-	}
-
-	public static TravelPadInfo createFromJson(Object json) {
-		TravelPadInfo info = new TravelPadInfo();
-		return info.fromJson(json);
 	}
 
 	@SuppressWarnings("unchecked")

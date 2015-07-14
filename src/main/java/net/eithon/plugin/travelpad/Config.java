@@ -20,9 +20,11 @@ public class Config {
 		public static long slownessTicks;
 		public static long blindnessTicks;
 		public static long disableEffectsAfterTicks;
+		public static double secondsBeforeLoad;
 		public static int secondsToPauseBeforeNextTeleport;
 		
 		static void load(Configuration config) {
+			secondsBeforeLoad = config.getDouble("SecondsBeforeLoad", 5.0);
 			ticksBeforeTele = config.getInt("TeleportAfterTicks", 100);
 			ticksBeforeJump = config.getInt("JumpAfterTicks", 0);
 			nauseaTicks = config.getInt("NauseaTicks", 200);
