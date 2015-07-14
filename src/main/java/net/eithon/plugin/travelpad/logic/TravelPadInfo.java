@@ -24,6 +24,7 @@ public class TravelPadInfo implements IJson<TravelPadInfo> {
 	private String _travelPadName;
 	private EithonPlayer _creator;
 	private boolean _hasVelocity;
+	private String _welcomeMessage;
 
 	private TravelPadInfo(String name, Location sourceLocation, Player creator)
 	{
@@ -50,6 +51,13 @@ public class TravelPadInfo implements IJson<TravelPadInfo> {
 		setVelocity(upSpeed, forwardSpeed, yaw);
 	}
 
+	TravelPadInfo() {
+	}
+
+	public boolean hasVelocity() { return this._hasVelocity; }
+
+	Vector getVelocity() { return this._velocity; }
+
 	void setVelocity(double upSpeed, double forwardSpeed, float yaw) {
 		this._upSpeed = upSpeed;
 		this._forwardSpeed = forwardSpeed;
@@ -58,76 +66,10 @@ public class TravelPadInfo implements IJson<TravelPadInfo> {
 		this._hasVelocity = true;
 	}
 
-	TravelPadInfo() {
-	}
-
-	public boolean hasVelocity() { return this._hasVelocity; }
-
 	public boolean isJumpPad() { return hasVelocity(); }
-
-	@Override
-	public TravelPadInfo factory() {
-		return new TravelPadInfo();
-	}
-
-	@Override
-	public TravelPadInfo fromJson(Object json) {
-		JSONObject jsonObject = (JSONObject) json;
-		this._travelPadName = (String) jsonObject.get("name");
-		this._sourceLocation = EithonLocation.getFromJson(jsonObject.get("sourceLocation"));
-		this._hasVelocity = (boolean) jsonObject.get("hasVelocity");
-		if (this._hasVelocity) {
-			velocityFromJson(jsonObject.get("velocity"));
-		} else {
-			this._targetLocation = EithonLocation.getFromJson(jsonObject.get("targetLocation"));
-		}
-		this._creator = EithonPlayer.getFromJSon(jsonObject.get("creator"));
-		return this;
-	}
-
-	private void velocityFromJson(Object json) {
-		JSONObject jsonObject = (JSONObject) json;
-		this._upSpeed = (double) jsonObject.get("upSpeed");
-		this._forwardSpeed = (double) jsonObject.get("forwardSpeed");
-		this._yaw = (float) (double) jsonObject.get("yaw");
-		this._velocity = convertToVelocityVector(this._upSpeed, this._forwardSpeed, this._yaw);
-	}
-
-	public static TravelPadInfo createFromJson(Object json) {
-		TravelPadInfo info = new TravelPadInfo();
-		return info.fromJson(json);
-	}
-
-	@SuppressWarnings("unchecked")
-	public JSONObject toJson() {
-		JSONObject json = new JSONObject();
-		json.put("name", this._travelPadName);
-		json.put("sourceLocation", this._sourceLocation.toJson());
-		json.put("hasVelocity", this._hasVelocity);
-		if (this._hasVelocity) {
-			json.put("velocity", velocityToJson());
-		} else {
-			json.put("targetLocation", this._targetLocation.toJson());
-		}
-		json.put("creator", this._creator.toJson());
-		return json;
-	}
-
-	@SuppressWarnings("unchecked")
-	private Object velocityToJson() {
-		JSONObject json = new JSONObject();
-		json.put("upSpeed", this._upSpeed);
-		json.put("forwardSpeed", this._forwardSpeed);
-		json.put("yaw", this._yaw);
-		return json;
-	}
 
 	Location getTargetLocation() {
 		return this._targetLocation.getLocation();
-	}
-
-	Vector getVelocity() {
-		return this._velocity;
 	}
 
 	public void setTarget(TravelPadInfo target) {
@@ -136,9 +78,11 @@ public class TravelPadInfo implements IJson<TravelPadInfo> {
 		this._hasVelocity = false;
 	}
 
-	String getTravelPadName() {
-		return this._travelPadName;
-	}
+	public void setWelcomeMessage(String message) { this._welcomeMessage = message; }
+
+	public String getWelcomeMessage() { return this._welcomeMessage; }
+
+	String getTravelPadName() { return this._travelPadName;	}
 
 	Location getSource() {
 		return this._sourceLocation.getLocation();
@@ -181,6 +125,65 @@ public class TravelPadInfo implements IJson<TravelPadInfo> {
 		return this._creator.getName();
 	}
 
+	@Override
+	public TravelPadInfo factory() {
+		return new TravelPadInfo();
+	}
+
+	@Override
+	public TravelPadInfo fromJson(Object json) {
+		JSONObject jsonObject = (JSONObject) json;
+		this._travelPadName = (String) jsonObject.get("name");
+		this._welcomeMessage = (String) jsonObject.get("welcomeMessage");
+		this._sourceLocation = EithonLocation.getFromJson(jsonObject.get("sourceLocation"));
+		this._hasVelocity = (boolean) jsonObject.get("hasVelocity");
+		if (this._hasVelocity) {
+			velocityFromJson(jsonObject.get("velocity"));
+		} else {
+			this._targetLocation = EithonLocation.getFromJson(jsonObject.get("targetLocation"));
+		}
+		this._creator = EithonPlayer.getFromJSon(jsonObject.get("creator"));
+		return this;
+	}
+
+	private void velocityFromJson(Object json) {
+		JSONObject jsonObject = (JSONObject) json;
+		this._upSpeed = (double) jsonObject.get("upSpeed");
+		this._forwardSpeed = (double) jsonObject.get("forwardSpeed");
+		this._yaw = (float) (double) jsonObject.get("yaw");
+		this._velocity = convertToVelocityVector(this._upSpeed, this._forwardSpeed, this._yaw);
+	}
+
+	public static TravelPadInfo createFromJson(Object json) {
+		TravelPadInfo info = new TravelPadInfo();
+		return info.fromJson(json);
+	}
+
+	@SuppressWarnings("unchecked")
+	public JSONObject toJson() {
+		JSONObject json = new JSONObject();
+		json.put("name", this._travelPadName);
+		json.put("welcomeMessage", this._welcomeMessage);
+		json.put("sourceLocation", this._sourceLocation.toJson());
+		json.put("hasVelocity", this._hasVelocity);
+		if (this._hasVelocity) {
+			json.put("velocity", velocityToJson());
+		} else {
+			json.put("targetLocation", this._targetLocation.toJson());
+		}
+		json.put("creator", this._creator.toJson());
+		return json;
+	}
+
+	@SuppressWarnings("unchecked")
+	private Object velocityToJson() {
+		JSONObject json = new JSONObject();
+		json.put("upSpeed", this._upSpeed);
+		json.put("forwardSpeed", this._forwardSpeed);
+		json.put("yaw", this._yaw);
+		return json;
+	}
+
 	public String toString() {
 		HashMap<String,String> namedArguments = getNamedArguments();
 		if (isJumpPad()) {
@@ -194,11 +197,13 @@ public class TravelPadInfo implements IJson<TravelPadInfo> {
 		HashMap<String,String> namedArguments = new HashMap<String, String>();
 		namedArguments.put("NAME", getTravelPadName());
 		if (isJumpPad()) {
+			namedArguments.put("WELCOME_MESSAGE", "-");
 			namedArguments.put("LINKED_TO", "-");
 			namedArguments.put("UP_SPEED", Double.toString(this._upSpeed));
 			namedArguments.put("FORWARD_SPEED", Double.toString(this._forwardSpeed));
 			namedArguments.put("VELOCITY", Double.toString(this._velocity.length()));
 		} else {
+			namedArguments.put("WELCOME_MESSAGE", this._welcomeMessage == null ? "-" : this._welcomeMessage);
 			namedArguments.put("UP_SPEED", "-");
 			namedArguments.put("FORWARD_SPEED", "-");
 			namedArguments.put("VELOCITY", "-");
