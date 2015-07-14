@@ -223,6 +223,7 @@ public class Controller implements IBlockMoverFollower {
 	void teleport(Player player, TravelPadInfo info) {
 		Location targetLocation = info.getTargetLocation();
 		player.teleport(targetLocation);
+		player.sendMessage(info.getWelcomeMessage());
 	}
 
 	void jump(Player player, TravelPadInfo info) {
@@ -316,6 +317,10 @@ public class Controller implements IBlockMoverFollower {
 	public void remove(TravelPadInfo info) {
 		this._allTravelPads.remove(info);	
 		save();
+	}
+
+	public void addMessage(TravelPadInfo info, String message) {
+		info.setWelcomeMessage(message);
 	}
 
 	public void link(TravelPadInfo info1, TravelPadInfo info2) {

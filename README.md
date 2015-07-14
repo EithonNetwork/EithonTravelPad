@@ -29,6 +29,10 @@ A player must have the "TravelPad.jump" permission to use a TravelPad. If he/she
 
 ## Release history
 
+### 1.2 (2015-07-14)
+
+* NEW: TravelPads of type teleport now can have a welcome message.
+
 ### 1.1.1 (2015-07-08)
 
 * BUG: Now shows subcommands if no subcommand was given.

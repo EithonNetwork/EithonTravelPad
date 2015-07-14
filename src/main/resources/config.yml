@@ -84,6 +84,7 @@ messages:
   #
   # The following messages have the following possible parameters
   # %NAME%: The name of the travelpad.
+  # %WELCOME_MESSAGE%: The optional welcome message for a travel pad.
   # %VELOCITY%: The velocity for a jump travelpad.
   # %UP_SPEED%: The up speed for a jump travelpad.
   # %FORWARD_SPEED%: The forward speed for a jump travelpad.

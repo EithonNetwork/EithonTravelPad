@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 
 public class CommandHandler implements ICommandHandler {
 	private static final String ADD_COMMAND = "/travelpad add <name> [<up speed> <forward speed>]";
+	private static final String ADDMESSAGE_COMMAND = "/travelpad addmessage <name> <message>";
 	private static final String VELOCITY_COMMAND = "/travelpad velocity <name> <up speed> <forward speed>";
 	private static final String GOTO_COMMAND = "/travelpad goto <name>";
 	private static final String LIST_COMMAND = "/travelpad list";
@@ -40,6 +41,8 @@ public class CommandHandler implements ICommandHandler {
 		
 		if (command.equals("add")) {
 			addCommand(commandParser);
+		} else if (command.equals("addmessage")) {
+			addMessageCommand(commandParser);
 		} else if (command.equals("link")) {
 			linkCommand(commandParser);
 		} else if (command.equals("velocity")) {
@@ -75,7 +78,20 @@ public class CommandHandler implements ICommandHandler {
 		}
 	}
 
+	void addMessageCommand(CommandParser commandParser)
+	{
+		if (!commandParser.hasPermissionOrInformSender("travelpad.addmessage")) return;
+		if (!commandParser.hasCorrectNumberOfArgumentsOrShowSyntax(2)) return;
 
+		Player player = commandParser.getPlayer();
+		String name =commandParser.getArgumentStringAsLowercase();
+		TravelPadInfo info = this._controller.getByNameOrInformUser(player, name);
+		String message = commandParser.getArgumentRest();
+		if (info == null) return;
+		
+		this._controller.addMessage(info, message);
+		Config.M.travelPadRemoved.sendMessage(player, name);
+	}
 
 	void velocityCommand(CommandParser commandParser)
 	{
@@ -162,6 +178,8 @@ public class CommandHandler implements ICommandHandler {
 
 		if (command.equals("add")) {
 			sender.sendMessage(ADD_COMMAND);
+		} else if (command.equals("addmessage")) {
+			sender.sendMessage(ADDMESSAGE_COMMAND);
 		} else if (command.equals("velocity")) {
 			sender.sendMessage(VELOCITY_COMMAND);
 		} else if (command.equals("link")) {
