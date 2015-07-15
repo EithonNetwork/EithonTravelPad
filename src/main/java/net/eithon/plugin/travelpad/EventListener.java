@@ -1,7 +1,6 @@
 package net.eithon.plugin.travelpad;
 
 import net.eithon.library.extensions.EithonPlugin;
-import net.eithon.library.move.IBlockMoverFollower;
 import net.eithon.library.plugin.Logger.DebugPrintLevel;
 import net.eithon.plugin.travelpad.logic.Controller;
 
@@ -12,7 +11,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
 
 public final class EventListener implements Listener {
 	
