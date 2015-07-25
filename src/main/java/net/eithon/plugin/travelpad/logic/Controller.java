@@ -230,7 +230,7 @@ public class Controller implements IBlockMoverFollower {
 	}
 
 	public void coolDown(Player player) {
-		this._coolDown.addPlayer(player);
+		this._coolDown.addIncident(player);
 	}
 
 	public boolean isInCoolDownPeriod(Player player) {
