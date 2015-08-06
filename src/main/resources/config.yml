@@ -31,12 +31,12 @@ JumpAfterTicks: 0
 #
 # The time to wait before we load the travelpad data from file
 #
-SecondsBeforeLoad: 5.0
+TimeSpanBeforeLoad: 5s
 
 #
 # Cool down period before you can jump again
 #
-SecondsToPauseBeforeNextTeleport: 3
+TimeSpanToPauseBeforeNextTeleport: 3s
 
 eithon:
   UseMarkUpForMessages: 0

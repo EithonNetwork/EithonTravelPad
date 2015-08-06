@@ -20,18 +20,18 @@ public class Config {
 		public static long slownessTicks;
 		public static long blindnessTicks;
 		public static long disableEffectsAfterTicks;
-		public static double secondsBeforeLoad;
-		public static int secondsToPauseBeforeNextTeleport;
+		public static long secondsBeforeLoad;
+		public static long secondsToPauseBeforeNextTeleport;
 		
 		static void load(Configuration config) {
-			secondsBeforeLoad = config.getDouble("SecondsBeforeLoad", 5.0);
+			secondsBeforeLoad = config.getSeconds("TimeSpanBeforeLoad", 5);
 			ticksBeforeTele = config.getInt("TeleportAfterTicks", 100);
 			ticksBeforeJump = config.getInt("JumpAfterTicks", 0);
 			nauseaTicks = config.getInt("NauseaTicks", 200);
 			slownessTicks = config.getInt("SlownessTicks", 0);
 			blindnessTicks = config.getInt("BlindnessTicks", 0);
 			disableEffectsAfterTicks = config.getInt("DisableEffectsAfterTicks", 120);
-			secondsToPauseBeforeNextTeleport = config.getInt("SecondsToPauseBeforeNextTeleport", 5);
+			secondsToPauseBeforeNextTeleport = config.getSeconds("TimeSpanToPauseBeforeNextTeleport", 3);
 		}
 	}
 	public static class C {
