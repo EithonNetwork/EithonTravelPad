@@ -220,7 +220,9 @@ public class Controller implements IBlockMoverFollower {
 	void teleport(Player player, TravelPadInfo info) {
 		Location targetLocation = info.getTargetLocation();
 		player.teleport(targetLocation);
-		player.sendMessage(info.getWelcomeMessage());
+		final String welcomeMessage = info.getWelcomeMessage();
+		if ((welcomeMessage == null) || (welcomeMessage.isEmpty())) return;
+		player.sendMessage(welcomeMessage);
 	}
 
 	void jump(Player player, TravelPadInfo info) {

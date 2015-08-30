@@ -29,6 +29,10 @@ A player must have the "TravelPad.jump" permission to use a TravelPad. If he/she
 
 ## Release history
 
+### 1.3.1 (2015-08-30)
+
+* BUG: If a travelpad does not have a welcome message, then there was an empty line sent to the player.
+
 ### 1.3 (2015-08-10)
 
 * CHANGE: All time span configuration values are now in the general TimeSpan format instead of hard coded to seconds or minutes or hours.
