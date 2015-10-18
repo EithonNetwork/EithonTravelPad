@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 import net.eithon.library.extensions.EithonLocation;
 import net.eithon.library.extensions.EithonPlayer;
-import net.eithon.library.json.IJson;
+import net.eithon.library.json.JsonObject;
 import net.eithon.plugin.travelpad.Config;
 
 import org.bukkit.Location;
@@ -13,7 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 import org.json.simple.JSONObject;
 
-public class TravelPadInfo implements IJson<TravelPadInfo> {
+public class TravelPadInfo extends JsonObject<TravelPadInfo> {
 	private EithonLocation _sourceLocation;
 	private EithonLocation _targetLocation;
 	private TravelPadInfo _targetTravelPad;
