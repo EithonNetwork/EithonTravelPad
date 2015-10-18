@@ -29,6 +29,10 @@ A player must have the "TravelPad.jump" permission to use a TravelPad. If he/she
 
 ## Release history
 
+### 1.4 (2015-10-18)
+
+* CHANGE: Refactoring EithonLibrary.
+
 ### 1.3.1 (2015-08-30)
 
 * BUG: If a travelpad does not have a welcome message, then there was an empty line sent to the player.
