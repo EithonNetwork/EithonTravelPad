@@ -1,7 +1,6 @@
 package net.eithon.plugin.travelpad;
 
 import net.eithon.library.extensions.EithonPlugin;
-import net.eithon.library.plugin.Logger.DebugPrintLevel;
 import net.eithon.plugin.travelpad.logic.Controller;
 
 import org.bukkit.Material;
@@ -24,30 +23,31 @@ public final class EventListener implements Listener {
 
 	@EventHandler
 	public void onPlayerInteractEvent(PlayerInteractEvent event) {
-		debug("onPlayerInteractEvent", "Enter");
+		verbose("onPlayerInteractEvent", "Enter");
 		if (event.isCancelled()) {
-			debug("onPlayerInteractEvent", "Event was already cancelled");
+			verbose("onPlayerInteractEvent", "Event was already cancelled");
 			return;
 		}
 		if (event.getAction() != Action.PHYSICAL) {
-			debug("onPlayerInteractEvent", "Event was not Action.PHYSICAL");
+			verbose("onPlayerInteractEvent", "Event was not Action.PHYSICAL");
 			return;
 		}
 		Player player = event.getPlayer();
 		Block pressurePlate = event.getClickedBlock();
 		if (pressurePlate == null) {
-			debug("onPlayerInteractEvent", "Not a clicked block");
+			verbose("onPlayerInteractEvent", "Not a clicked block");
 			return;
 		}
 		if (pressurePlate.getType() != Material.STONE_PLATE) {
-			debug("onPlayerInteractEvent", "Not a STONE_PLATE");
+			verbose("onPlayerInteractEvent", "Not a STONE_PLATE");
 			return;
 		}
-		debug("onPlayerInteractEvent", "We are ready for teleport");
+		verbose("onPlayerInteractEvent", "We are ready for teleport");
 		this._controller.maybeTravel(player, pressurePlate);
 	}
-
-	private void debug(String method, String message) {
-		this._eithonPlugin.getEithonLogger().debug(DebugPrintLevel.VERBOSE, "%s: %s", method, message);
+	
+	private void verbose(String method, String format, Object... args)
+	{
+		this._eithonPlugin.dbgVerbose("EventListener", method, format, args);
 	}
 }

@@ -6,7 +6,6 @@ import net.eithon.library.extensions.EithonLocation;
 import net.eithon.library.extensions.EithonPlugin;
 import net.eithon.library.move.IBlockMoverFollower;
 import net.eithon.library.move.MoveEventHandler;
-import net.eithon.library.plugin.Logger.DebugPrintLevel;
 import net.eithon.library.time.CoolDown;
 import net.eithon.plugin.travelpad.Config;
 
@@ -245,7 +244,7 @@ public class Controller implements IBlockMoverFollower {
 	}
 
 	void debug(String method, String message) {
-		this._eithonPlugin.getEithonLogger().debug(DebugPrintLevel.VERBOSE, "%s: %s", method, message);
+		this._eithonPlugin.dbgVerbose("Controller", method, "%s", message);
 	}
 
 	@Override
