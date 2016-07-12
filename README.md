@@ -29,6 +29,10 @@ A player must have the "TravelPad.jump" permission to use a TravelPad. If he/she
 
 ## Release history
 
+### 1.5 (2016-06-30)
+
+* CHANGE: Minecraft 1.10
+
 ### 1.4 (2015-10-18)
 
 * CHANGE: Refactoring EithonLibrary.
