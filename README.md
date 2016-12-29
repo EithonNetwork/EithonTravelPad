@@ -29,6 +29,10 @@ A player must have the "TravelPad.jump" permission to use a TravelPad. If he/she
 
 ## Release history
 
+### 1.6 (2016-12-29)
+
+* CHANGE: Bukkit 1.11.
+
 ### 1.5 (2016-06-30)
 
 * CHANGE: Minecraft 1.10
